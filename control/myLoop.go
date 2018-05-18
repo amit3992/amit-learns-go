@@ -8,16 +8,18 @@ import (
 )
 
 type SiteMapIndex struct {
-	Locations []Location `xml:"sitemap"`
+	Locations [] string `xml:"sitemap>loc"`
 }
 
+/*
 type Location struct {
 	Loc string `xml:"loc"`
-}
+} */
 
+/*
 func (l Location) String() string {
 	return fmt.Sprintf(l.Loc)
-}
+}*/
 
 func testLoop() {
 	for i := 0; i < 10; i++ {
