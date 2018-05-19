@@ -1,6 +1,7 @@
-package LinkedList
+package main
 
 import (
+	"fmt"
 	"sync"
 
 	"github.com/cheekybits/genny/generic"
@@ -24,13 +25,22 @@ type LinkedList struct {
 
 /* Function to check if linkedlist is empty */
 func (ll *LinkedList) isEmpty() bool {
-	return ll.head == nil
+	ll.lock.RLock()
+	defer ll.lock.RUnlock()
+
+	if ll.head == nil {
+		return true
+	} else {
+		return false
+	}
 }
 
 /* Function to append an element to the linkedlist */
 func (ll *LinkedList) Append(t Item) {
 	ll.lock.Lock()
 	node := Node{t, nil}
+
+	fmt.Printf("Appending value: %s\n", node.content)
 
 	if ll.head == nil {
 		ll.head = &node
@@ -54,4 +64,22 @@ func (ll *LinkedList) Append(t Item) {
 /* Return linkedlist size */
 func (ll *LinkedList) size() int {
 	return ll.count
+}
+
+/* Iterate to return size */
+func (ll *LinkedList) getMeTrueSize() int {
+	ll.lock.RLock()
+	defer ll.lock.RUnlock()
+
+	size := 1
+	last := ll.head
+	for {
+		if last == nil || last.next == nil {
+			break
+		}
+		last = last.next
+		size++
+	}
+
+	return size
 }
