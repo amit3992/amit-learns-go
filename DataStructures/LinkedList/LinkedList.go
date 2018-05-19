@@ -23,6 +23,7 @@ type LinkedList struct {
 	lock  sync.RWMutex
 }
 
+/* Util methods */
 /* Function to check if linkedlist is empty */
 func (ll *LinkedList) isEmpty() bool {
 	ll.lock.RLock()
@@ -33,32 +34,6 @@ func (ll *LinkedList) isEmpty() bool {
 	} else {
 		return false
 	}
-}
-
-/* Function to append an element to the linkedlist */
-func (ll *LinkedList) Append(t Item) {
-	ll.lock.Lock()
-	node := Node{t, nil}
-
-	fmt.Printf("Appending value: %s\n", node.content)
-
-	if ll.head == nil {
-		ll.head = &node
-	} else {
-		last := ll.head
-
-		for {
-			if ll.head == nil {
-				break
-			}
-			last = last.next
-		}
-
-		last.next = &node
-	}
-
-	ll.count++
-	ll.lock.Unlock()
 }
 
 /* Return linkedlist size */
@@ -82,4 +57,93 @@ func (ll *LinkedList) getMeTrueSize() int {
 	}
 
 	return size
+}
+
+/* Return head of linkedList */
+func (ll *LinkedList) getListHead() *Node {
+	ll.lock.RLock()
+	defer ll.lock.RUnlock()
+
+	return ll.head
+}
+
+/* Iterate list */
+func (ll *LinkedList) iterateList() {
+
+	fmt.Println("Iterating list: \n")
+	ll.lock.RLock()
+	defer ll.lock.RUnlock()
+
+	current := ll.head
+	index := 0
+	for {
+		if current == nil {
+			break
+		}
+		index++
+		fmt.Print(current.content)
+		fmt.Print(" ")
+		current = current.next
+	}
+
+	fmt.Println()
+}
+
+/* ============================ FUNCTIONAL METHODS ================================ */
+
+/* Function to append an element to the linkedlist */
+func (ll *LinkedList) Append(t Item) {
+	ll.lock.Lock()
+	node := Node{t, nil}
+
+	//fmt.Printf("Appending value: %s\n", node.content)
+
+	if ll.head == nil {
+		ll.head = &node
+	} else {
+		last := ll.head
+
+		for {
+			if last.next == nil {
+				break
+			}
+			last = last.next
+		}
+
+		last.next = &node
+	}
+
+	ll.count++
+	ll.lock.Unlock()
+}
+
+/* Function to insert an element at a particular position in the linkedlist */
+func (ll *LinkedList) insertAt(t Item, pos int) error {
+	ll.lock.RLock()
+	defer ll.lock.RUnlock()
+
+	if ll.head == nil || pos < 0 || ll.count < pos {
+		return fmt.Errorf("Index out of bounds")
+	}
+
+	newNode := Node{t, nil}
+	current := ll.head
+	index := 0
+
+	if pos == 0 {
+		newNode.next = ll.head
+		ll.head = &newNode
+		ll.count++
+		return nil
+	}
+
+	for index < pos-2 {
+		index++
+		current = current.next
+	}
+
+	newNode.next = current.next
+	current.next = &newNode
+	ll.count++
+	return nil
 }
