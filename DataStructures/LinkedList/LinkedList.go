@@ -147,3 +147,28 @@ func (ll *LinkedList) insertAt(t Item, pos int) error {
 	ll.count++
 	return nil
 }
+
+/* Function which returns the index of an element in the linkedlist */
+func (ll *LinkedList) IndexOf(t Item) int {
+	ll.lock.RLock()
+	defer ll.lock.RUnlock()
+
+	if ll.head == nil {
+		return 0
+	}
+
+	node := ll.head
+	j := 0
+
+	for {
+		if node.content == t {
+			return j
+		}
+
+		if node.next == nil {
+			return -1
+		}
+		node = node.next
+		j++
+	}
+}

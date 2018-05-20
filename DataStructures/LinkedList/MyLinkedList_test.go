@@ -28,3 +28,23 @@ func TestAppend(t *testing.T) {
 	/* Iterate my linkedlist */
 	myList.iterateList()
 }
+
+/* Testing IndexOf method */
+func TestIndexOf(t *testing.T) {
+
+	if i := myList.IndexOf("Alexander"); i != 0 {
+		t.Errorf("Error to get index of first element: Alexander. Expected 0 but got %d", i)
+	}
+
+	if i := myList.IndexOf("Aaron"); i != 1 {
+		t.Errorf("Error to get index of first element: Alexander. Expected 1 but got %d", i)
+	}
+
+	if i := myList.IndexOf("Marquis"); i != 2 {
+		t.Errorf("Error to get index of first element: Alexander. Expected 2 but got %d", i)
+	}
+
+	if i := myList.IndexOf("Angelica"); i != -1 {
+		t.Errorf("Error to get index of first element: Alexander. Expected -1 but got %d", i)
+	}
+}
