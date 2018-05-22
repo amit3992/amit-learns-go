@@ -68,9 +68,9 @@ func (ll *LinkedList) getListHead() *Node {
 }
 
 /* Iterate list */
-func (ll *LinkedList) iterateList() {
+func (ll *LinkedList) IterateList() {
 
-	fmt.Println("Iterating list: \n")
+	fmt.Println("Iterating list:")
 	ll.lock.RLock()
 	defer ll.lock.RUnlock()
 
@@ -118,7 +118,7 @@ func (ll *LinkedList) Append(t Item) {
 }
 
 /* Function to insert an element at a particular position in the linkedlist */
-func (ll *LinkedList) insertAt(t Item, pos int) error {
+func (ll *LinkedList) InsertAt(t Item, pos int) error {
 	ll.lock.RLock()
 	defer ll.lock.RUnlock()
 

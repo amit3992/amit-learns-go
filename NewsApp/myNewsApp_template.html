@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <title>my-awesome-news-aggregator</title>
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+</head>
+
+<body>
+
+    <h1 align="center">{{ .Title}}</h1>
+    <p align="center"><a href="https://github.com/amit3992/amit-learns-go/blob/master/NewsApp/myNewsApp.go" target="_blank">code on github</a></p>
+<table id="NewsTable" class="display">
+    <col width="5%">
+    <col width="25%">
+    <col width="85%">
+    <thead>
+        <th>Date</th>
+        <th>Title</th>
+        <th>Keywords</th>
+    </thead>
+    <tbody>
+        
+        {{ range $key, $value := .News }}
+
+        <tr>
+            <td>{{ $value.PublicationDate }}</td>
+            <td><a href="{{ $value.Location}}" target="_blank"> {{ $key }} </a></td>
+            <td>{{ $value.Keyword }}</td>
+        </tr>
+
+        {{ end }}
+        
+    </tbody>
+</table>
+
+<script> $(document).ready( function() {
+    $('#NewsTable').DataTable();
+});
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
