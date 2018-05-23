@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"sync"
-
 	"github.com/cheekybits/genny/generic"
 )
 
